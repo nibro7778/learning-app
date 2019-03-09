@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using WidgetApi.Models;
 
 namespace WidgetApi.Controllers
@@ -11,9 +12,21 @@ namespace WidgetApi.Controllers
     [ApiController]
     public class WidgetController : ControllerBase
     {
+
+        ILogger<WidgetController> _logger;
+
+        public WidgetController(ILogger<WidgetController> logger)
+        {
+            _logger = logger;
+        }
+
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            _logger.LogDebug("Get was called");
+
+
             await Task.Delay(100); // simulate latency
             var items = new List<Widget>()
             {
